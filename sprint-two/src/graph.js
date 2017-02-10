@@ -25,17 +25,22 @@ Graph.prototype.contains = function(node) {
 Graph.prototype.removeNode = function(node) {
   if ( this.nodes.indexOf(node) === -1 ) {
     return;
-  } else {
-    this.nodes.splice(this.nodes.indexOf(node), 1);
   }
+  if ( this.nodes.indexOf(node) !== -1 ) {
+    //This will delete the node from the node array
+    this.nodes.splice(this.nodes.indexOf(node), 1);
+  } 
+  debugger;
 
-  //assuming node is storing info on it's edge 
-  //reuse removeEdge 
+  for ( var key in this.edges) {
+    if (key === JSON.stringify(node) || this.edges[key] === JSON.stringify(node)) {
+      delete this.edges[key];
+    }
+  }
 };
 
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
 Graph.prototype.hasEdge = function(fromNode, toNode) {
-
   if ( this.edges[fromNode] && this.edges[fromNode] === toNode ) {
     return true;
   } else if ( this.edges[toNode] && this.edges[toNode] === fromNode ) {
@@ -47,13 +52,11 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
 
 // Connects two nodes in a graph by adding an edge between them.
 Graph.prototype.addEdge = function(fromNode, toNode) {
-  // this.edges.push(JSON.stringify([fromNode, toNode]));
   this.edges[fromNode] = toNode;
 };
 
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode) {
-
   if ( this.edges[fromNode] && this.edges[fromNode] === toNode ) {
     delete this.edges[fromNode];
   } else if ( this.edges[toNode] && this.edges[toNode] === fromNode ) {
@@ -63,6 +66,12 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
+  return _.each(this.nodes, function(element) {
+    return cb(element);
+  });
+  // return this.nodes.forEach(function(element) {
+  //   return cb(element);
+  // });
 };
 
 /*
