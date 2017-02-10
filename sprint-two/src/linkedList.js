@@ -29,7 +29,6 @@ var LinkedList = function() {
   };
 
   list.contains = function(target) {
-    debugger;
     //start with the head
     var startingPoint = list.head;
     //check if node's value = target, return true
