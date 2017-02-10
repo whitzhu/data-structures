@@ -70,7 +70,7 @@ Graph.prototype.forEachNode = function(cb) {
     return cb(element);
   });
   // return this.nodes.forEach(function(element) {
-  //   return cb(element);
+  //   cb(element);
   // });
 };
 
