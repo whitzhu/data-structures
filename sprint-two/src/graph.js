@@ -30,8 +30,6 @@ Graph.prototype.removeNode = function(node) {
     //This will delete the node from the node array
     this.nodes.splice(this.nodes.indexOf(node), 1);
   } 
-  debugger;
-
   for ( var key in this.edges) {
     if (key === JSON.stringify(node) || this.edges[key] === JSON.stringify(node)) {
       delete this.edges[key];
