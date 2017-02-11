@@ -39,28 +39,31 @@ BinarySearchTree.prototype.insert = function(val) {
 
 BinarySearchTree.prototype.contains = function(val) {
   //which accepts a value and returns a boolean reflecting whether or not the value is contained in the tree
+  var result = false;
+  if ( this.value === val ) {
+    result = true;
+  } 
 
   var inspectRightNode = function(obj) {
     if ( obj.value === val ) {
       result = true;
-    } else if ( obj.right !== undefined || obj.right !== null ) {
-      inspectRightNode(obj.right.value);
+    } else if ( obj.right !== null ) {
+      inspectRightNode(obj.right);
+    } else if ( obj.right === null ) {
+      return result;
     }
   };
 
   var inspectLeftNode = function(obj) {
     if ( obj.value === val ) {
       result = true;
-    } else if ( obj.left !== undefined || obj.left !== null ) {
-      inspectLeftNode(obj.left.value);
+    } else if ( obj.left !== null ) {
+      inspectLeftNode(obj.left);
+    } else if ( obj.left === null ) {
+      return result;
     }
   };
-
-  debugger;
-  var result = false;
-  if ( this.value === val ) {
-    result = true;
-  } 
+   
   if ( val > this.value ) {
     inspectRightNode(this.right);
   }
@@ -70,35 +73,40 @@ BinarySearchTree.prototype.contains = function(val) {
 
   return result;
 
-
-  /*
-  //if this node value equals val
-  if ( this.value === val ) { 
-    //then return true
-    trigger = true;
-    return trigger;
-  }
-  //if val is greater than node value
-  if ( val > this.value ) {
-    //if node right exist
-    if ( this.right !== undefined || this.right !== null ) {
-      //then inspect node right
-      this.contains.call(this.right, val);
-    } 
-    //if val is less than node value
-  } else if ( val < this.value ) {
-    //if node left exist
-    if ( this.left !== undefined || this.right !== null ) {
-      //then inspect node left
-      this.contains.call(this.left, val);
-    } 
-  }
-  */
-
 };
 
 BinarySearchTree.prototype.depthFirstLog = function(func) {
   // which accepts a callback and executes it on every value contained in the tree
+  debugger;
+  func(this.value);
+
+  var inspectRightNode = function(obj) {
+    func(obj.value);
+    if ( obj.right !== null ) {
+      inspectRightNode(obj.right);
+    }
+    if ( obj.left !== null) {
+      inspectLeftNode(obj.left);
+    }
+  };
+
+  var inspectLeftNode = function(obj) {
+    func(obj.value);
+    if ( obj.right !== null ) {
+      inspectRightNode(obj.right);
+    }
+    if ( obj.left !== null) {
+      inspectLeftNode(obj.left);
+    }
+  };
+ 
+  if ( this.right !== null ) {
+    inspectRightNode(this.right);
+  }
+  if ( this.left !== null) {
+    inspectLeftNode(this.left);
+  }
+
 };
 
 /*
