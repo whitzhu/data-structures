@@ -77,7 +77,6 @@ BinarySearchTree.prototype.contains = function(val) {
 
 BinarySearchTree.prototype.depthFirstLog = function(func) {
   // which accepts a callback and executes it on every value contained in the tree
-  debugger;
   func(this.value);
 
   var inspectRightNode = function(obj) {
